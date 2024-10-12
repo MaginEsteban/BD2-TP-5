@@ -5,11 +5,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -20,10 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
-import ar.unrn.tp.jpa.services.ClientService;
-import ar.unrn.tp.jpa.services.DiscountService;
-import ar.unrn.tp.jpa.services.ProductService;
-import ar.unrn.tp.jpa.services.SaleService;
+import ar.unrn.tp.jpa.services.*;
 import ar.unrn.tp.modelo.Product;
 import ar.unrn.tp.modelo.Card;
 import ar.unrn.tp.modelo.Cart;
@@ -37,12 +34,19 @@ public class Principal extends JFrame {
     private JTextArea descuentosArea;
     private JButton botonPrecioTotal;
     private JButton botonComprar;
+    private List<Discount> descuentos;
+    private PaymentService pay;
+    private DiscountService d;
+    private SaleService s;
+    private Long id_cliente;
 
     public Principal(Long idCliente,String persistence_unit) {
     	ClientService c = new ClientService(persistence_unit);
         ProductService p = new ProductService(persistence_unit);
-        DiscountService d = new DiscountService(persistence_unit);
-        SaleService s = new SaleService(persistence_unit,c,p);
+        id_cliente = idCliente;
+        d = new DiscountService(persistence_unit);
+        pay = new PaymentService(persistence_unit,p);
+        s = new SaleService(persistence_unit,c,p,pay);
     	
     	Client cli;
     	// Configurar la ventana principal
@@ -55,16 +59,16 @@ public class Principal extends JFrame {
         List<Product> productos = p.listarProductos();
         cli = c.buscarCliente(idCliente);
         List<Card> tarjetas = cli.getCardList();
-        List<Discount> descuentos = d.descuentos();
+        descuentos = d.descuentos();
         String text = "";
         
         for(Discount de: descuentos) {
         	if(
-        		(	(de.getInicio().isEqual(LocalDate.now())) || (de.getInicio().isBefore(LocalDate.now()))  )
+        		(	(de.getInicio().isEqual(LocalDate.now())) || (de.getInicio().isBefore(LocalDate.now())  )
         		&& 
-        		(   (de.getFin().isEqual(LocalDate.now()))    || (de.getFin().isAfter(LocalDate.now()))    )  
-        																								) {
-        		text = text.concat("Descuento en " + de.getMarca() + " del " + de.getDesc() + "% \n");
+        		(   (de.getFin().isEqual(LocalDate.now())    || (de.getFin().isAfter(LocalDate.now()))    )
+        																								))) {
+        		text = text.concat("Descuento en " + de.getMarca() + " del " + de.getDescu() + "% \n");
         	}
         	else {
         		descuentos.remove(de);
@@ -115,16 +119,16 @@ public class Principal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-            	Discount dis = null;
+            	Discount disc = null;
             	double tot = 0.0;
             	for (Discount d: descuentos){
-                  if(d.getDesc() == 8L){
-                	  dis = d;
+                  if(d.getDescu() == 8L){
+                	  disc = d;
                   }
                 }
             	
             	try {
-            	Cart c = new Cart(listaProductos.getSelectedValuesList(),dis);
+            	Cart c = new Cart(listaProductos.getSelectedValuesList(),disc);
             	
             	Card c2 = listaTarjetas.getSelectedValue();
             	
@@ -140,16 +144,15 @@ public class Principal extends JFrame {
         botonComprar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	Discount dis = null;
-            	for (Discount d: descuentos){
-                    if(d.getDesc() == 8L){
-                  	  dis = d;
-                    }
-                  }
+
+
             	try{
-            		
+
             	if(listaTarjetas.getSelectedValue() != null) {
-            		s.realizarVenta(idCliente, listaProductos.getSelectedValuesList(), dis,listaTarjetas.getSelectedValue());
+                    Discount dis = d.buscarDescuento(Objects.requireNonNull(buscar()).getId());
+                    Long idCarrito = pay.crearCarrito(listaProductos.getSelectedValuesList(),dis);
+                    Long idPago = pay.crearPago(listaTarjetas.getSelectedValue().getId(),idCarrito);
+            		s.realizarVenta(id_cliente,idPago);
             		JOptionPane.showMessageDialog(null, "Compra realiza con exito!");
             	}
             	else {
@@ -166,4 +169,13 @@ public class Principal extends JFrame {
 	
 
     }
+    private Discount buscar(){
+        for (Discount d: this.descuentos){
+            if(d.getDescu() == 8L){
+                return d;
+            }
+        }
+        return null;
+    }
+
 }

@@ -4,11 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Embeddable
 public class Category {
-    private String name;
+    private String name_category;
     protected Category(){
 
     }
@@ -21,17 +19,17 @@ public class Category {
         }
 
 
-        this.name = name_category;
+        this.name_category = name_category;
     }
 
     // Getters and setters
     public String getNameCategory() {
-        return name;
+        return name_category;
     }
-    private void setNameCategory(String name_category) {
-        this.name = name_category;
+    public void setNameCategory(String name_category) {
+        this.name_category = name_category;
     }
     public String toString() {
-        return "Nombre de Categoria: " + this.name;
+        return this.name_category;
     }
 }

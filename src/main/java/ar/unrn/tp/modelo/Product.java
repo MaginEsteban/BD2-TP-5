@@ -2,8 +2,13 @@ package ar.unrn.tp.modelo;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.DialectOverride;
 
 @Entity
+@Setter
+@Getter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,10 +17,11 @@ public class Product {
     private String description;
     private double price;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_discount")
     private Discount promo;
     @Embedded
     private Category category;
+    @Version
+    private Long version;
 
     protected Product(){
 
@@ -54,29 +60,29 @@ public class Product {
         this.id = id;
     }
 
-    private Long getCode() {
+    public Long getCode() {
         return code;
     }
     public void setCode(Long code) {
         this.code = code;
     }
-    protected String getDescription() {
+    public String getDescription() {
         return description;
     }
     public void setDescription(String description) {
         this.description = description;
     }
-    private Category getCategory() {
+    public Category getCategory() {
         return category;
     }
-    private void setCategory(Category category) { this.category = category; }
-    protected double getPrice() {
+    public void setCategory(Category category) { this.category = category; }
+    public double getPrice() {
         return price;
     }
     public void setPrice(double price) {
         this.price = price;
     }
-    protected Discount getPromo() {
+    public Discount getPromo() {
         return promo;
     }
     public void setPromo(Discount promo) {

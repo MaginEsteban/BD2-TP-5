@@ -1,15 +1,11 @@
 package ar.unrn.tp.modelo;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
@@ -19,9 +15,11 @@ public class Discount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    private Long desc;
+    private Long descu;
     private String marca;
+    @Temporal(TemporalType.DATE)
     private LocalDate inicio;
+    @Temporal(TemporalType.DATE)
     private LocalDate fin;
 
     protected Discount(){
@@ -55,24 +53,24 @@ public class Discount {
             throw new IllegalArgumentException("Las fechas no pueden ser las mismas");
         }
 
-        this.desc = desc;
+        this.descu = desc;
         this.marca = marca;
         this.inicio = finicio;
         this.fin = ffin;
     }
 
     
-    private Long getId() {
+    public Long getId() {
 		return id;
 	}
 	private void setId(Long id) {
 		this.id = id;
 	}
-	public Long getDesc() {
-        return desc;
+	public Long getDescu() {
+        return descu;
     }
-    public void setDesc(Long desc) {
-        this.desc = desc;
+    public void setDescu(Long descu) {
+        this.descu = descu;
     }
     public String getMarca() {
         return marca;

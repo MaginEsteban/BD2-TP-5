@@ -1,11 +1,17 @@
 package ar.unrn.tp.modelo;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-@Embeddable
+@Entity
 public class Payment {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Card paymentCard;
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Cart cart;
 
     protected Payment(){
@@ -27,6 +33,14 @@ public class Payment {
     }
 
     // Getters y setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Card getPaymentCard() {
         return paymentCard;

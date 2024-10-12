@@ -38,24 +38,25 @@ public class ProductService implements ProductoInterfaz {
     }
 
     @Override
-    public void modificarProducto(Long idProducto, Long codigo, String descripcion, double precio, Discount dis) {
+    public void modificarProducto(Long idProducto, Long codigo, String descripcion, double precio,Discount dis,Category cat) {
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-
-            Product producto = em.getReference(Product.class, idProducto);
+            Product producto = em.find(Product.class, idProducto);
             producto.setCode(codigo);
             producto.setDescription(descripcion);
             producto.setPrice(precio);
             producto.setPromo(dis);
+            producto.setCategory(cat);
+            em.merge(producto);
             tx.commit();
-        } catch (Exception e) {
+        }catch (OptimisticLockException e) {
+            tx.rollback();
+            throw new OptimisticLockException("Error el producto ha sido modificado por otro proceso" + e.getMessage());
+        }
+        catch (Exception e) {
             tx.rollback();
             throw new RuntimeException(e);
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
         }
         
     }
@@ -63,6 +64,9 @@ public class ProductService implements ProductoInterfaz {
     @Override
     public List<Product> listarProductos() {
         return em.createQuery("SELECT p FROM Product p", Product.class).getResultList();
+    }
+    public List<String> listarCategorias() {
+        return em.createQuery("SELECT c.name_category FROM Product p JOIN p.category c", String.class).getResultList();
     }
 
     public Product buscarProducto(Long idProducto){

@@ -12,10 +12,12 @@ public interface ProductoInterfaz {
         void crearProducto(Long codigo, String descripcion, double precio, Category cat, Long dis);
 
         //validar que sea un producto existente
-        void modificarProducto(Long idProducto,Long codigo,String descripcion,double precio, Discount dis);
+        void modificarProducto(Long idProducto,Long codigo,String descripcion,double precio,Discount dis,Category cat);
 
         //Devuelve todos los productos
         List<Product> listarProductos();
+
+        List<String> listarCategorias();
 
         Product buscarProducto(Long idProd);
 }

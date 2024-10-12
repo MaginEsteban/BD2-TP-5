@@ -9,6 +9,7 @@ import jakarta.persistence.EntityTransaction;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.sql.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -17,32 +18,30 @@ public class SaleService implements VentaInterfaz {
     private EntityManager em;
     private final ClientService clService;
     private final ProductService pService;
+    private final PaymentService payService;
 
-    public SaleService(String s, ClientService c, ProductService p) {
+    public SaleService(String s, ClientService c, ProductService p, PaymentService pa) {
         emf = Persistence.createEntityManagerFactory(s);
         em = emf.createEntityManager();
         this.clService = c;
         this.pService = p;
+        this.payService = pa;
     }
 
     @Override
-    public void realizarVenta(Long idCliente, List<Product> productos, Discount d,Card c) {
+    public void realizarVenta(Long idCliente,Long idPayment) {
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
             Client cliente = clService.buscarCliente(idCliente);
-            
-            Sale venta = new Sale(LocalDate.now(), LocalTime.now(), cliente, new Payment(c, new Cart(productos, d)));
+            Payment pago = payService.buscarPago(idPayment);
+            Sale venta = new Sale(Date.valueOf(LocalDate.now()), LocalTime.now(), cliente,pago);
             em.persist(venta);
             tx.commit();
             em.clear();
         } catch (Exception e) {
             tx.rollback();
             throw new RuntimeException(e);
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
         }
         
     }

@@ -1,7 +1,6 @@
 package ar.unrn.tp.modelo;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
@@ -23,8 +22,8 @@ public class Client {
     private String name;    
     private String lastname;
     private String email;
-    @OneToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cliente")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_client")
     private List<Card> cardList;
     
     protected Client(){
@@ -67,11 +66,11 @@ public class Client {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-        //this.cardList = new ArrayList<>();
+        this.cardList = new ArrayList<>();
     }
 
     // Getters and setters
-    private Long getId() {
+    public Long getId() {
         return id;
     }
     private void setId(Long id) {
@@ -118,5 +117,4 @@ public class Client {
 
 
     }
-
 }

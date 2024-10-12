@@ -16,7 +16,7 @@ public interface ClienteInterfaz {
     void modificarCliente(Long idCliente,Long dni, String nombre,String apellido,String email);
 
     // validar que sea un cliente existente
-    void agregarTarjeta(Long idCliente,Long nro, String marca);
+    void agregarTarjeta(Long idCliente, Card c);
 
     //Devuelve las tarjetas de un cliente específico
     List<Card> listarTarjetas(Long idCliente);

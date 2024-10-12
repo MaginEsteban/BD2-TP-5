@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Getter
@@ -16,48 +16,58 @@ public class Card {
     private Long number;
     private String provider;
 
-    protected Card(){
+    protected Card() {
 
     }
+
     // Constructor
     public Card(Long num, String provider) {
 
-        if (num == null){
+        if (num == null) {
             throw new IllegalArgumentException("El numero de la tarjeta no puede ser nulo");
         }
 
-        if (num <= 0){
+        if (num <= 0) {
             throw new IllegalArgumentException("El numero de la tarjeta debe ser un numero mayor a 0");
         }
 
-        if (provider == null){
+        if (provider == null) {
             throw new IllegalArgumentException("El proveedor de la tarjeta no puede ser nulo");
         }
 
 
         this.number = num;
         this.provider = provider;
+
     }
 
     // Getter y setter
-    private Long getId() {
+    public Long getId() {
         return id;
     }
+
     private void setId(Long id) {
         this.id = id;
     }
+
     public String getProvider() {
         return provider;
     }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
     protected Long getNumber() {
         return number;
     }
-    private void setProvider(String provider){
+
+    public void setProvider(String provider) {
         this.provider = provider;
     }
-    
+
     private String convertir() {
-    	String numeroStr = number.toString(); // Convertir a String
+        String numeroStr = number.toString(); // Convertir a String
 
         // Verificar que el número tiene al menos 4 dígitos
         if (numeroStr.length() > 4) {
@@ -75,5 +85,5 @@ public class Card {
     public String toString() {
         return this.getProvider() + " terminada en " + this.convertir();
     }
-}
 
+}

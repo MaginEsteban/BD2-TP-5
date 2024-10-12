@@ -1,28 +1,47 @@
 package ar.unrn.tp.main;
 
-import ar.unrn.tp.jpa.services.ClientService;
-import ar.unrn.tp.jpa.services.DiscountService;
 // ar.unrn.tp.jpa.services.DiscountService;
-import ar.unrn.tp.jpa.services.ProductService;
-import ar.unrn.tp.jpa.services.SaleService;
+
+import ar.unrn.tp.jpa.services.*;
 import ar.unrn.tp.modelo.*;
-import ar.unrn.tp.ui.Principal;
+import ar.unrn.tp.ui.ModificarProducto;
 import ar.unrn.tp.ui.SeleccionString;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 	public static void main(String[] args) {
-    String[] opciones = {"jpa-objectdb", "mysql-unit"};
-	SeleccionString s = new SeleccionString(1L,opciones);
 
-
-
+    //String[] opciones = {"jpa-objectdb", "mysql-unit"};
+	//SeleccionString selec = new SeleccionString(1L,opciones);
+	ModificarProducto m = new ModificarProducto(1L,"mysql-unit");
+	//ProductService p = new ProductService("mysql-unit");
+	//DiscountService d = new DiscountService("mysql-unit");
+	//Discount dis = d.buscarDescuento(1L);
+	//Product pro = p.buscarProducto(1L);
+	//p.modificarProducto(1L,333L,"Nike",1000.0,dis,pro.getCategory());
+	/*
+	ClientService c = new ClientService("mysql-unit");
+	DiscountService d = new DiscountService("mysql-unit");
+	ProductService p = new ProductService("mysql-unit");
+	PaymentService pay = new PaymentService("mysql-unit",p);
+	SaleService s = new SaleService("mysql-unit",c,p,pay);
+	*/
+	//System.out.println(pay.crearCarrito(p.listarProductos(),new Discount(8L,"Naranja",LocalDate.of(2024,10,10), LocalDate.of(2024,10,12))));
+	//Long idCarrito = pay.crearCarrito(p.listarProductos(),new Discount(8L,"Naranja",LocalDate.of(2024,10,10), LocalDate.of(2024,10,12)));
+	//Long idPago = pay.crearPago(2L,idCarrito);
+	//s.realizarVenta(1L,idPago);
+	//c.crearCliente(34L,"Magin","Esteban","ex@gmail.com");
+	//c.agregarTarjeta(1L,new Card(2222L,"Naranja"));
+	//c.agregarTarjeta(1L,new Card(2332L,"Visa"));
+	//System.out.println(c.listarTarjetas(1L));
+	//d.crearDescuento(8L,"Naranja",LocalDate.now(),LocalDate.of(2024,10,12));
+	//p.crearProducto(333L,"Nike",1000.2,new Category("Zapatillas"),1L);
+	//p.crearProducto(334L,"Nike",200.0,new Category("Campera"),1L);
+	//p.crearProducto(335L,"Adidas",400.0,new Category("Remera"),1L);
+	//p.crearProducto(336L,"Nike",15.3,new Category("Ojotas"),1L);
+	//p.crearProducto(337L,"Adidas",1500.0,new Category("Zapatillas"),1L);
+		// s.realizarVenta(1L,p.listarProductos(),di,ca);
 
 
 

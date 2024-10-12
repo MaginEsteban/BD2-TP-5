@@ -4,6 +4,7 @@ import ar.unrn.tp.modelo.Discount;
 import ar.unrn.tp.modelo.Product;
 import ar.unrn.tp.modelo.Sale;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,11 +14,11 @@ public interface VentaInterfaz {
     // - debe ser un cliente existente
     // - la lista de productos no debe estar vacía
     // - La tarjeta debe pertenecer al cliente
-    void realizarVenta(Long idCliente, List<Product> productos, Discount descuento,Card d);
+    void realizarVenta(Long idCliente,Long idPayment);
 
     //Devuelve el monto total aplicando los descuentos al día de la fecha
     // validar que no llegue una lista vacía y la tarjeta exista
-    double calcularMonto(Long idSale, LocalDate l,Long idTarjeta);
+    double calcularMonto(Long idSale, LocalDate l, Long idTarjeta);
 
     //Devuelve todas las ventas realizadas
     List<Sale> ventas();

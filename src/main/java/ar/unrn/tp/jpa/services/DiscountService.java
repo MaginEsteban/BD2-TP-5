@@ -1,8 +1,10 @@
 package ar.unrn.tp.jpa.services;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+import ar.unrn.tp.modelo.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -46,5 +48,9 @@ public class DiscountService implements DescuentoInterfaz {
 	public List<Discount> descuentos () {
         return em.createQuery("SELECT d FROM Discount d", Discount.class).getResultList();
     }
+
+	public Discount buscarDescuento(Long idDescuento){
+		return em.find(Discount.class,idDescuento);
+	}
 
 }

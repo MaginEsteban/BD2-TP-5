@@ -1,6 +1,8 @@
 package ar.unrn.tp.modelo;
 
 import jakarta.persistence.*;
+
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -9,18 +11,18 @@ public class Sale {
     @Id
     @GeneratedValue
     private Long id;
-    private LocalDate date;
+    private Date date;
     private LocalTime time;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Client client;
-    @Embedded
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Payment payment;
 
     protected Sale(){
 
     }
     // Constructor
-    public Sale(LocalDate date, LocalTime time, Client client, Payment payment) {
+    public Sale(Date date, LocalTime time, Client client, Payment payment) {
 
         if (date == null){
             throw new IllegalArgumentException("La fecha no puede ser nula");
@@ -51,10 +53,10 @@ public class Sale {
     private void setId(Long id) {
         this.id = id;
     }
-    protected LocalDate getDate() {
+    protected Date getDate() {
         return date;
     }
-    private void setDate(LocalDate date) {
+    private void setDate(Date date) {
         this.date = date;
     }
     private LocalTime getTime() {
@@ -80,7 +82,7 @@ public class Sale {
         return payment.getCart().total() - this.aplicarDescuentos(c,d);
     }
 
-    public double aplicarDescuentos(Card c,LocalDate date){
+    public double aplicarDescuentos(Card c, LocalDate date){
         return payment.getCart().calcularTodosLosDescuentos(c,date);
     }
     public double aplicarSoloCompra(Card c,LocalDate date){

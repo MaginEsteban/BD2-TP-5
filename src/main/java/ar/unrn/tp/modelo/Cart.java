@@ -1,13 +1,25 @@
 package ar.unrn.tp.modelo;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.*;
+
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Embeddable
+@Entity
 public class Cart {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> cart;
+    @OneToOne(cascade = CascadeType.MERGE)
     private Discount promoCart;
 
     protected Cart(){
@@ -26,6 +38,14 @@ public class Cart {
 
         this.cart = cart;
         this.promoCart = promo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     private List<Product> getCart() {
@@ -68,7 +88,7 @@ public class Cart {
                     descuento = descuento + aux.get(count).getPrice();
                     count++;
                 }
-                descuento = descuento * promoCart.getDesc() / 100;
+                descuento = descuento * promoCart.getDescu() / 100;
             }
         }
         return descuento;
@@ -85,7 +105,7 @@ public class Cart {
             while (count < sizeProductos) {
                 if ((aux.get(count).existeDescuento()) && (date.isEqual(aux.get(count).getPromo().getInicio()) ||
                         date.isAfter(aux.get(count).getPromo().getInicio()) && (date.isEqual(aux.get(count).getPromo().getFin()) || date.isBefore(aux.get(count).getPromo().getFin())))){
-                    descuento = descuento + aux.get(count).getPrice() * aux.get(count).getPromo().getDesc() / 100;
+                    descuento = descuento + aux.get(count).getPrice() * aux.get(count).getPromo().getDescu() / 100;
                 }
                 count++;
             }
