@@ -41,6 +41,12 @@
         	<artifactId>hibernate-core</artifactId>
         	<version>6.2.3.Final</version> 
     	</dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.0.0</version>
+            <scope>provided</scope>
+        </dependency>
     	<dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

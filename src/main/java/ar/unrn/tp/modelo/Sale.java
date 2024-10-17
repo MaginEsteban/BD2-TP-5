@@ -18,6 +18,10 @@ public class Sale {
     @ManyToOne(cascade = CascadeType.MERGE)
     private Payment payment;
 
+    //Tp5
+    private String saleNumber;
+
+
     protected Sale(){
 
     }
@@ -93,6 +97,14 @@ public class Sale {
     }
     public String toString() {
         return "Venta: " + this.time;
+    }
+
+    public String getSaleNumber() {
+        return saleNumber;
+    }
+
+    public void setSaleNumber(String saleNumber) {
+        this.saleNumber = saleNumber;
     }
     /*
     public double test(String provider,LocalDate startDate, LocalDate endDate){
