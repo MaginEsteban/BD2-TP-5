@@ -71,7 +71,7 @@ public class SaleService implements VentaInterfaz {
     }
 
         public List<Sale> ventas () {
-            return em.createQuery("SELECT s FROM Sale s ORDER BY s.date DESC", Sale.class).getResultList();
+            return em.createQuery("SELECT s FROM Sale s", Sale.class).getResultList();
         }
 
 

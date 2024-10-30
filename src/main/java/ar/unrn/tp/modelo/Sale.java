@@ -96,10 +96,7 @@ public class Sale {
         return payment.getCart().calcularDescuentoMarca(date);
     }
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.id).append(", ").append(this.date).append(", ").append(this.getPayment().getCart().toString());
-        return sb.toString();
-        //return "Venta " + this.id + " : " + this.date + " \n" + this.payment.getCart().toString();
+        return "Venta: " + this.time;
     }
 
     public String getSaleNumber() {

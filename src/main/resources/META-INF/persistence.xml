@@ -29,10 +29,10 @@
 
 
         <class>ar.unrn.tp.modelo.Discount</class>
-
+        -->
         <class>ar.unrn.tp.modelo.Card</class>
         <class>ar.unrn.tp.modelo.Client</class>
-        Clases mapeadas -->
+        <!-- Clases mapeadas -->
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

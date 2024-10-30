@@ -2,10 +2,8 @@ package ar.unrn.tp.main;
 
 // ar.unrn.tp.jpa.services.DiscountService;
 
-import ar.unrn.tp.cache.CacheService;
 import ar.unrn.tp.jpa.services.*;
 import ar.unrn.tp.modelo.*;
-import ar.unrn.tp.ui.Cache;
 import ar.unrn.tp.ui.ModificarProducto;
 import ar.unrn.tp.ui.SeleccionString;
 
@@ -16,15 +14,7 @@ public class Main {
 
     //String[] opciones = {"jpa-objectdb", "mysql-unit"};
 	//SeleccionString selec = new SeleccionString(1L,opciones);
-	//ModificarProducto m = new ModificarProducto(1L,"mysql-unit");
-		ClientService c = new ClientService("mysql-unit");
-		ProductService p = new ProductService("mysql-unit");
-		PaymentService pay = new PaymentService("mysql-unit",p);
-		SaleService s = new SaleService("mysql-unit",c,p,pay);
-		//System.out.println(s.ventas());
-		CacheService cs = new CacheService(s);
-		Cache cac = new Cache(cs);
-		//System.out.println(cs.getUltimasCompras());
+	ModificarProducto m = new ModificarProducto(1L,"mysql-unit");
 	//ProductService p = new ProductService("mysql-unit");
 	//DiscountService d = new DiscountService("mysql-unit");
 	//Discount dis = d.buscarDescuento(1L);
