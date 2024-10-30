@@ -48,7 +48,7 @@ public class Cart {
         this.id = id;
     }
 
-    private List<Product> getCart() {
+    public List<Product> getCart() {
         return cart;
     }
     private void setCart(List<Product> cart) {
@@ -111,5 +111,21 @@ public class Cart {
             }
         }
         return descuento;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Productos: [");
+
+        for (int i = 0; i < cart.size(); i++) {
+            sb.append(cart.get(i));
+            if (i < cart.size() - 1) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 }

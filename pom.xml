@@ -41,12 +41,14 @@
         	<artifactId>hibernate-core</artifactId>
         	<version>6.2.3.Final</version> 
     	</dependency>
+        <!--
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.0.0</version>
             <scope>provided</scope>
         </dependency>
+        -->
     	<dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -68,6 +70,11 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>4.2.3</version>
         </dependency>
     </dependencies>
     <properties>

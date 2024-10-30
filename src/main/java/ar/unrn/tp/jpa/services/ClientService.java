@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 public class ClientService implements ClienteInterfaz {
-	private  EntityManagerFactory emf;
+	private EntityManagerFactory emf;
     private  EntityManager em;
     
     public ClientService (String s) {
